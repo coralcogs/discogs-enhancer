@@ -52,6 +52,7 @@ let prefs = {
   randomItem: false,
   ratingPercent: false,
   readability: false,
+  recordVisit: false,
   relativeSoldDate: false,
   releaseScanner: false,
   releaseDurations: true,

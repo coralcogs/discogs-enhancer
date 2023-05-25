@@ -931,6 +931,17 @@ appendFragment([resourceLibrary])
         elems.push(readabilityReact);
       }
 
+      if (prefs.recordVisit) {
+
+        let recordVisit = document.createElement('script');
+
+        recordVisit.type = 'text/javascript';
+        recordVisit.src = chrome.extension.getURL('js/extension/features/record-visit.js');
+        recordVisit.className = 'de-init';
+
+        elems.push(recordVisit);
+      }
+
       if (prefs.relativeSoldDate) {
 
         // relative-sold-date.js

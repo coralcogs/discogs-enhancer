@@ -105,6 +105,7 @@ window.addEventListener('load', () => {
       toggleRandomItem = document.getElementById('toggleRandomItem'),
       toggleRatingPercent = document.getElementById('toggleRatingPercent'),
       toggleReadability = document.getElementById('toggleReadability'),
+      toggleRecordVisit = document.getElementById('toggleRecordVisit'),
       toggleRelativeSoldDate = document.getElementById('toggleRelativeSoldDate'),
       toggleReleaseDurations = document.getElementById('toggleReleaseDurations'),
       toggleReleaseRatings = document.getElementById('toggleReleaseRatings'),
@@ -301,6 +302,7 @@ window.addEventListener('load', () => {
   toggleQuickSearch.addEventListener('change', triggerSave);
   toggleRandomItem.addEventListener('change', triggerSave);
   toggleRatingPercent.addEventListener('change', triggerSave);
+  toggleRecordVisit.addEventListener('change', triggerSave);
   toggleReadability.addEventListener('change', triggerSave);
   toggleRelativeSoldDate.addEventListener('change', triggerSave);
   toggleReleaseDurations.addEventListener('change', triggerSave);
@@ -484,6 +486,7 @@ window.addEventListener('load', () => {
       toggleQuickSearch.checked = prefs.quickSearch;
       toggleRandomItem.checked = prefs.randomItem;
       toggleRatingPercent.checked = prefs.ratingPercent;
+      toggleRecordVisit.checked = prefs.recordVisit;
       toggleReadability.checked = prefs.readability;
       toggleRelativeSoldDate.checked = prefs.relativeSoldDate;
       toggleReleaseDurations.checked = prefs.releaseDurations;
