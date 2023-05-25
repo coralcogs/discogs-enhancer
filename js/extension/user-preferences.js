@@ -1122,6 +1122,16 @@ appendFragment([resourceLibrary])
         elems.push(suggested);
       }
 
+      if (prefs.trackNotes) {
+        let trackNotes = document.createElement('script');
+
+        trackNotes.type = 'text/javascript';
+        trackNotes.src = chrome.runtime.getURL('js/extension/features/track-notes.js');
+        trackNotes.className = 'de-init';
+    
+        elems.push(trackNotes);
+      }
+
       // tweak-discriminators.js
       if (prefs.tweakDiscrims) {
 
