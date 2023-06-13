@@ -931,6 +931,16 @@ appendFragment([resourceLibrary])
         elems.push(readabilityReact);
       }
 
+      if (prefs.recordReleaseVisit) {
+        let recordReleaseVisit = document.createElement('script');
+
+        recordReleaseVisit.type = 'text/javascript';
+        recordReleaseVisit.src = chrome.runtime.getURL('js/extension/features/record-release-visit.js');
+        recordReleaseVisit.className = 'de-init';
+
+        elems.push(recordReleaseVisit);
+      }
+
       if (prefs.relativeSoldDate) {
 
         // relative-sold-date.js
@@ -1163,7 +1173,7 @@ appendFragment([resourceLibrary])
       return resolve(prefs);
     })
       .then((prefs) => {
-        chrome.storage.sync.get(['featureData']).then(({ featureData }) => {
+        chrome.storage.sync.get(['featureData', 'username']).then(({ featureData, username }) => {
           return new Promise(async resolve => {
 
             let oldPrefs = JSON.parse(localStorage.getItem('userPreferences')) || {},
@@ -1225,6 +1235,11 @@ appendFragment([resourceLibrary])
             }
 
             oldPrefs.newBlockedSellers = [];
+
+            // Add username to preferences
+            if (username) {
+              oldPrefs.username = username;
+            }
 
             newPrefs = Object.assign(oldPrefs, { featureData }, { currentFilterState }, { userCurrency });
 
