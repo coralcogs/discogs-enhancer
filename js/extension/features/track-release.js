@@ -27,66 +27,48 @@ rl.ready(async () => {
         return;
     }
     let tracking;
-    // Define the checkStatus function
-    async function checkStatus() {
+    // Define the track function
+    async function track({ type }) {
         try {
-            let url = `https://api.ozma.works/tracked_release?release_id=eq.${id}`,
-                response = await fetch(url),
-                data = await response.json();
+            let url = `https://api.ozma.works/tracked_release${type === 'check' ? `?release_id=eq.${id}` : ''}`,
+                method = {
+                    check: 'GET',
+                    track: 'POST',
+                    untrack: 'DELETE',
+                }[type],
+                body = JSON.stringify({
+                    username,
+                    release_id: id,
+                }),
+                headers = { 'Content-Type': 'application/json' },
+                response = await fetch(url, {
+                    method,
+                    body: type === 'track' ? body : undefined,
+                    headers: type === 'track' ? headers : undefined,
+                });
+            if (type === 'track') {
+                return response.ok;
+            }
+            if (type === 'untrack') {
+                return !response.ok;
+            }
+            const data = await response.json();
             return !!data.length;
         } catch (error) {
             console.log('Error checking if release is tracked', error);
         }
     }
-    // Define the track function
-    async function track() {
-        try {
-            let url = 'https://api.ozma.works/tracked_release',
-                body = JSON.stringify({
-                    username,
-                    release_id: id,
-                }),
-                response = await fetch(url, {
-                    method: 'POST',
-                    body,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                });
-            return response.ok;
-        } catch (error) {
-            console.log('Error tracking release', error);
-        }
-    }
-    // Define the untrack function
-    async function untrack() {
-        try {
-            let url = `https://api.ozma.works/tracked_release`,
-                body = JSON.stringify({
-                    username,
-                    release_id: id,
-                })
-            response = await fetch(url, {
-                method: 'DELETE',
-                body,
-
-            });
-            return response.ok ? false : true;
-        } catch (error) {
-            console.log('Error untracking release', error);
-        }
-    }
     // Define the toggleTrack event handler
     async function toggleTrack() {
         if (!tracking) {
-            tracking = await track();
+            tracking = await track({ type: 'track' });
         } else {
-            tracking = await untrack();
+            tracking = await track({ type: 'untrack' });
         }
         button.textContent = tracking ? 'Untrack' : 'Track';
         button.addEventListener('click', toggleTrack);
     }
-    tracking = await checkStatus();
+    tracking = await track({ type: 'check' });
     // Add track release button to release actions section
     const releaseActionsSection = document.getElementById('release-actions'),
         button = document.createElement('button');
