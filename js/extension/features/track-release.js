@@ -30,7 +30,7 @@ rl.ready(async () => {
     // Define the track function
     async function track({ type }) {
         try {
-            let url = `https://api.ozma.works/tracked_release${type === 'check' ? `?release_id=eq.${id}` : ''}`,
+            let url = `https://api.ozma.works/tracked_release${['check', 'untrack'].includes(type) ? `?release_id=eq.${id}` : ''}`,
                 method = {
                     check: 'GET',
                     track: 'POST',
