@@ -72,7 +72,7 @@ rl.ready(async () => {
     // Add track release button to release actions section
     const releaseActionsSection = document.getElementsByClassName('buttons_2jlYL')[0],
         button = document.createElement('button');
-    button.classList = '_button_yfwhw_1 button_3lhp0 _dense_yfwhw_52 _notHasTextNode_yfwhw_30 _notHasTextNodeFirst_yfwhw_30 _notHasTextNodeLast_yfwhw_35 _secondary_yfwhw_58';
+    button.classList = '_button_yfwhw_1 button_3lhp0 _dense_yfwhw_52 _secondary_yfwhw_58';
     button.textContent = tracking ? 'Untrack' : 'Track';
     // Add the button to the release actions section
     releaseActionsSection.appendChild(button);
