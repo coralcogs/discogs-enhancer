@@ -55,7 +55,7 @@ rl.ready(async () => {
             const data = await response.json();
             return !!data.length;
         } catch (error) {
-            console.log('Error checking if release is tracked', error);
+            console.log(`Error running ${type} in track function`, error);
         }
     }
     // Define the toggleTrack event handler
