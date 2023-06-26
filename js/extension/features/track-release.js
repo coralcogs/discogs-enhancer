@@ -22,6 +22,8 @@ rl.ready(async () => {
         id = href?.split('/release/')[1]?.split('-')[0];
     // Get the user from preferences
     const username = rl.getPreference('username');
+    const chatId = rl.getPreference('chatId');
+    const telegramBotToken = rl.getPreference('telegramBotToken');
     if (!username?.length) {
         alert('Please set username in options page');
         return;
@@ -71,10 +73,25 @@ rl.ready(async () => {
     tracking = await track({ type: 'check' });
     // Add track release button to release actions section
     const releaseActionsSection = document.getElementsByClassName('buttons_2jlYL')[0],
-        button = document.createElement('button');
-    button.classList = '_button_yfwhw_1 button_3lhp0 _dense_yfwhw_52 _secondary_yfwhw_58';
-    button.textContent = tracking ? 'Untrack' : 'Track';
+        trackButton = document.createElement('button'),
+        trackLegacyButton = document.createElement('button');
+    trackButton.classList = '_button_yfwhw_1 button_3lhp0 _dense_yfwhw_52 _secondary_yfwhw_58';
+    trackButton.textContent = tracking ? 'Untrack' : 'Track';
+    trackButton.addEventListener('click', toggleTrack);
     // Add the button to the release actions section
-    releaseActionsSection.appendChild(button);
-    button.addEventListener('click', toggleTrack);
+    releaseActionsSection.appendChild(trackButton);
+    // Track Legacy
+    async function trackLegacy() {
+        let url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatId}&text=%2Faddw%20${username}%20${id}`,
+            response = await fetch(url)
+            data = await response?.json();
+        console.log('url', url);
+        console.log('response', response);
+        console.log('data', data);
+    }
+    trackLegacyButton.classList = '_button_yfwhw_1 button_3lhp0 _dense_yfwhw_52 _secondary_yfwhw_58';
+    trackLegacyButton.textContent = 'Track Legacy';
+    trackLegacyButton.addEventListener('click', trackLegacy);
+    releaseActionsSection.appendChild(trackLegacyButton);
+
 });

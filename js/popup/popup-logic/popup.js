@@ -302,6 +302,7 @@ window.addEventListener('load', () => {
   toggleRandomItem.addEventListener('change', triggerSave);
   toggleRatingPercent.addEventListener('change', triggerSave);
   toggleReadability.addEventListener('change', triggerSave);
+  toggleRecordReleaseVisit.addEventListener('change', triggerSave);
   toggleRelativeSoldDate.addEventListener('change', triggerSave);
   toggleReleaseDurations.addEventListener('change', triggerSave);
   toggleReleaseRatings.addEventListener('change', triggerSave);
@@ -485,6 +486,7 @@ window.addEventListener('load', () => {
       toggleRandomItem.checked = prefs.randomItem;
       toggleRatingPercent.checked = prefs.ratingPercent;
       toggleReadability.checked = prefs.readability;
+      toggleRecordReleaseVisit.checked = prefs.recordReleaseVisit;
       toggleRelativeSoldDate.checked = prefs.relativeSoldDate;
       toggleReleaseDurations.checked = prefs.releaseDurations;
       toggleReleaseRatings.checked = prefs.releaseRatings;

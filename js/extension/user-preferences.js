@@ -135,7 +135,7 @@ function migratePreferences() {
 }
 
 /**
- * docuemnt.readyState check via promise
+ * document.readyState check via promise
  * @returns {Promise}
  */
 function documentReady(document) {
@@ -1184,7 +1184,7 @@ appendFragment([resourceLibrary])
       return resolve(prefs);
     })
       .then((prefs) => {
-        chrome.storage.sync.get(['featureData', 'username']).then(({ featureData, username }) => {
+        chrome.storage.sync.get(['featureData', 'username', 'chatId', 'telegramBotToken']).then(({ featureData, username, chatId, telegramBotToken }) => {
           return new Promise(async resolve => {
 
             let oldPrefs = JSON.parse(localStorage.getItem('userPreferences')) || {},
@@ -1250,6 +1250,12 @@ appendFragment([resourceLibrary])
             // Add username to preferences
             if (username) {
               oldPrefs.username = username;
+            }
+            if (chatId) {
+              oldPrefs.chatId = chatId;
+            }
+            if (telegramBotToken) {
+              oldPrefs.telegramBotToken = telegramBotToken;
             }
 
             newPrefs = Object.assign(oldPrefs, { featureData }, { currentFilterState }, { userCurrency });
