@@ -81,6 +81,7 @@ export function applySave(message, event, currencyTarget = 'currency') {
         sortButtons: document.getElementById('toggleSortBtns').checked,
         sortByTotalPrice: document.getElementById('toggleSortByTotalPrice').checked,
         suggestedPrices: document.getElementById('togglePrices').checked,
+        trackRelease: document.getElementById('toggleTrackRelease').checked,
         tweakDiscrims: document.getElementById('toggleTweakDiscrims').checked,
         userCurrency: document.getElementById(currencyTarget).value,
         ytPlaylists: document.getElementById('toggleYtPlaylists').checked,

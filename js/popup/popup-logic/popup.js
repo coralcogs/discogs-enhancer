@@ -116,6 +116,7 @@ window.addEventListener('load', () => {
       toggleShortcuts = document.getElementById('toggleShortcuts'),
       toggleSortBtns = document.getElementById('toggleSortBtns'),
       toggleSortByTotalPrice = document.getElementById('toggleSortByTotalPrice'),
+      toggleTrackRelease = document.getElementById('toggleTrackRelease'),
       toggleTweakDiscrims = document.getElementById('toggleTweakDiscrims'),
       toggleYtPlaylists = document.getElementById('toggleYtPlaylists'),
       userCurrency = document.getElementById('currency'),
@@ -301,6 +302,7 @@ window.addEventListener('load', () => {
   toggleRandomItem.addEventListener('change', triggerSave);
   toggleRatingPercent.addEventListener('change', triggerSave);
   toggleReadability.addEventListener('change', triggerSave);
+  toggleRecordReleaseVisit.addEventListener('change', triggerSave);
   toggleRelativeSoldDate.addEventListener('change', triggerSave);
   toggleReleaseDurations.addEventListener('change', triggerSave);
   toggleReleaseRatings.addEventListener('change', triggerSave);
@@ -312,6 +314,7 @@ window.addEventListener('load', () => {
   toggleShortcuts.addEventListener('change', triggerSave);
   toggleSortBtns.addEventListener('change', triggerSave);
   toggleSortByTotalPrice.addEventListener('change', triggerSave);
+  toggleTrackRelease.addEventListener('change', triggerSave);
   toggleTweakDiscrims.addEventListener('change', triggerSave);
   toggleYtPlaylists.addEventListener('change', ytPlaylists.toggleYtPlaylists);
   userCurrency.addEventListener('change', () => applySave(null, event));
@@ -483,6 +486,7 @@ window.addEventListener('load', () => {
       toggleRandomItem.checked = prefs.randomItem;
       toggleRatingPercent.checked = prefs.ratingPercent;
       toggleReadability.checked = prefs.readability;
+      toggleRecordReleaseVisit.checked = prefs.recordReleaseVisit;
       toggleRelativeSoldDate.checked = prefs.relativeSoldDate;
       toggleReleaseDurations.checked = prefs.releaseDurations;
       toggleReleaseRatings.checked = prefs.releaseRatings;
@@ -494,6 +498,7 @@ window.addEventListener('load', () => {
       toggleShortcuts.checked = prefs.formatShortcuts;
       toggleSortBtns.checked = prefs.sortButtons;
       toggleSortByTotalPrice.checked = prefs.sortByTotalPrice;
+      toggleTrackRelease.checked = prefs.trackRelease;
       toggleTweakDiscrims.checked = prefs.tweakDiscrims;
       toggleYtPlaylists.checked = prefs.ytPlaylists;
 

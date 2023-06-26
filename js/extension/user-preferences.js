@@ -14,12 +14,12 @@
  */
 
 let
-    donate,
-    elems = [],
-    filterMonitor,
-    hashes,
-    prefs = {},
-    resourceLibrary;
+  donate,
+  elems = [],
+  filterMonitor,
+  hashes,
+  prefs = {},
+  resourceLibrary;
 
 // Feature preferece defaults
 // TODO: these can be removed after a few months once
@@ -89,39 +89,39 @@ function migratePreferences() {
       let up = JSON.parse(localStorage.getItem('userPreferences')) || {};
 
       let
-          blockList = up.blockList || defaults.blockList,
-          countryList = up.countryList || defaults.countryList,
-          discriminators = up.discriminators || defaults.discriminators,
-          favoriteList = up.favoriteList || defaults.favoriteList,
-          filterPrices = up.filterPrices || defaults.filterPrices,
-          inventoryScanner = up.inventoryScanner || defaults.inventoryScanner,
-          linksInTabs = up.linksInTabs || defaults.linksInTabs,
-          mediaCondition = up.mediaCondition || defaults.mediaCondition,
-          minimumRating = up.inventoryRatings || defaults.minimumRating,
-          readability = up.readability || defaults.readability,
-          sellerRep = up.sellerRep || defaults.sellerRep,
-          sellerRepColor = up.sellerRepColor || defaults.sellerRepColor,
-          sellerRepFilter = up.sellerRepFilter || defaults.sellerRepFilter,
-          sleeveCondition = up.sleeveCondition || defaults.sleeveCondition,
-          usDateFormat = up.usDateFormat || defaults.usDateFormat;
+        blockList = up.blockList || defaults.blockList,
+        countryList = up.countryList || defaults.countryList,
+        discriminators = up.discriminators || defaults.discriminators,
+        favoriteList = up.favoriteList || defaults.favoriteList,
+        filterPrices = up.filterPrices || defaults.filterPrices,
+        inventoryScanner = up.inventoryScanner || defaults.inventoryScanner,
+        linksInTabs = up.linksInTabs || defaults.linksInTabs,
+        mediaCondition = up.mediaCondition || defaults.mediaCondition,
+        minimumRating = up.inventoryRatings || defaults.minimumRating,
+        readability = up.readability || defaults.readability,
+        sellerRep = up.sellerRep || defaults.sellerRep,
+        sellerRepColor = up.sellerRepColor || defaults.sellerRepColor,
+        sellerRepFilter = up.sellerRepFilter || defaults.sellerRepFilter,
+        sleeveCondition = up.sleeveCondition || defaults.sleeveCondition,
+        usDateFormat = up.usDateFormat || defaults.usDateFormat;
 
       let featureData = {
-            blockList,
-            countryList,
-            discriminators,
-            favoriteList,
-            filterPrices,
-            inventoryScanner,
-            linksInTabs,
-            mediaCondition,
-            minimumRating,
-            readability,
-            sellerRep,
-            sellerRepColor,
-            sellerRepFilter,
-            sleeveCondition,
-            usDateFormat
-          };
+        blockList,
+        countryList,
+        discriminators,
+        favoriteList,
+        filterPrices,
+        inventoryScanner,
+        linksInTabs,
+        mediaCondition,
+        minimumRating,
+        readability,
+        sellerRep,
+        sellerRepColor,
+        sellerRepFilter,
+        sleeveCondition,
+        usDateFormat
+      };
 
       return Promise.all([
         chrome.storage.sync.set({ featureData }),
@@ -135,7 +135,7 @@ function migratePreferences() {
 }
 
 /**
- * docuemnt.readyState check via promise
+ * document.readyState check via promise
  * @returns {Promise}
  */
 function documentReady(document) {
@@ -160,7 +160,7 @@ function documentReady(document) {
 function appendFragment(elems) {
   return new Promise((resolve, reject) => {
     let fragment = document.createDocumentFragment(),
-        loadedScripts = 0;
+      loadedScripts = 0;
 
     elems.forEach(elm => {
       elm.onload = () => {
@@ -651,7 +651,7 @@ appendFragment([resourceLibrary])
 
         // everlasting-marketplace.js && everlasting-marketplace-release-page.js
         let everlastingMarket = document.createElement('script'),
-            everlastingMarketReleases = document.createElement('script');
+          everlastingMarketReleases = document.createElement('script');
 
         everlastingMarket.type = 'text/javascript';
         everlastingMarket.src = chrome.runtime.getURL('js/extension/features/everlasting-marketplace.js');
@@ -1132,6 +1132,17 @@ appendFragment([resourceLibrary])
         elems.push(suggested);
       }
 
+      if (prefs.trackRelease) {
+
+        let trackRelease = document.createElement('script');
+
+        trackRelease.type = 'text/javascript';
+        trackRelease.src = chrome.runtime.getURL('js/extension/features/track-release.js');
+        trackRelease.className = 'de-init';
+
+        elems.push(trackRelease);
+      }
+
       // tweak-discriminators.js
       if (prefs.tweakDiscrims) {
 
@@ -1173,13 +1184,13 @@ appendFragment([resourceLibrary])
       return resolve(prefs);
     })
       .then((prefs) => {
-        chrome.storage.sync.get(['featureData', 'username']).then(({ featureData, username }) => {
+        chrome.storage.sync.get(['featureData', 'username', 'chatId', 'telegramBotToken']).then(({ featureData, username, chatId, telegramBotToken }) => {
           return new Promise(async resolve => {
 
             let oldPrefs = JSON.parse(localStorage.getItem('userPreferences')) || {},
-                currentFilterState = getCurrentFilterState(prefs),
-                userCurrency = prefs.userCurrency,
-                newPrefs;
+              currentFilterState = getCurrentFilterState(prefs),
+              userCurrency = prefs.userCurrency,
+              newPrefs;
 
             // Remove deprecated properties from preferences
             // TODO: delete these eventually
@@ -1214,7 +1225,7 @@ appendFragment([resourceLibrary])
             if (oldPrefs.newBlockedSellers.length > 0) {
 
               let uniqueBlockedSellers = [...new Set(oldPrefs.newBlockedSellers)],
-                  sendEvents = true;
+                sendEvents = true;
 
               if (featureData.blockList.list.includes('development')) {
                 sendEvents = false;
@@ -1239,6 +1250,12 @@ appendFragment([resourceLibrary])
             // Add username to preferences
             if (username) {
               oldPrefs.username = username;
+            }
+            if (chatId) {
+              oldPrefs.chatId = chatId;
+            }
+            if (telegramBotToken) {
+              oldPrefs.telegramBotToken = telegramBotToken;
             }
 
             newPrefs = Object.assign(oldPrefs, { featureData }, { currentFilterState }, { userCurrency });
