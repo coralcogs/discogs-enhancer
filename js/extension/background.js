@@ -63,6 +63,7 @@ let prefs = {
   sortButtons: true,
   sortByTotalPrice: false,
   suggestedPrices: false,
+  trackRelease: true,
   tweakDiscrims: false,
   userCurrency: 'USD',
   ytPlaylists: false,
